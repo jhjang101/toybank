@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toy Bank Ledger - {{ account_holder_name }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>{{ account_holder_name }}'s Toy Bank</h1>
+        </header>
+
+        <div class="balance-card">
+            <h1>Current Balance</h1>
+            <h1>{{ current_balance }}</h1> 
+        </div>
+
+        <div class="teller">
+            {% if teller_logged_in %}
+                <a href="{{ url_for('add_transaction') }}" class="teller-button">
+                    + Add Transaction
+                </a>
+                <a href="{{ url_for('logout') }}" class="teller-button logout-button">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="teller-button">
+                    Bank Teller Login
+                </a>
+            {% endif %}
+        </div>
+
+        <h1>Transaction History</h1>
+        
+        <div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th class="text-right">Deposit</th>
+                        <th class="text-right">Withdrawal</th>
+                        <th class="text-right">Running Balance</th>
+                        {% if teller_logged_in %}
+                            <th>Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for t in transactions %}
+                    <tr>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.description }}</td>
+                        <td class="text-right {% if t.deposit != '--' %}text-deposit{% else %}text-dash{% endif %}">{{ t.deposit }}</td>
+                        <td class="text-right {% if t.withdrawal != '--' %}text-withdrawal{% else %}text-dash{% endif %}">{{ t.withdrawal }}</td>
+                        <td class="text-right running-balance">{{ t.running_balance }}</td>
+                        
+                        {% if teller_logged_in %}
+                            <td>
+                                <a href="{{ url_for('edit_transaction', id=t.id) }}" class="edit-link">Edit</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No transactions found.</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

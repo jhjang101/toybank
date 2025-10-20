@@ -1,0 +1,22 @@
+services:
+  toybank:
+    # Use the image you built locally with the updated app.py file
+    image: toybank
+
+    # Give container name
+    container_name: toybank
+
+    # Instruct Docker to restart the container if it stops unexpectedly
+    restart: always 
+    
+    # Map the container port (8000) to the host machine port (8000)
+    ports:
+      - "8000:8000"
+
+    # This overrides the password from the .env file in the image
+    environment:
+      - TELLER_PASSWORD=0000 # This overrides the default password from the .env file in the image
+    
+    # Map the data folder in the container to one on the host
+    volumes:
+      - ./data:/usr/src/app/app/data
