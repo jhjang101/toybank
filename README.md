@@ -9,7 +9,9 @@ The easiest way to get the Toy Bank running is using Docker Compose.
     mkdir toybank
     cd toybank
     ```
-2. Create `compose.yaml` and paste the configuration example below.
+2. Download `.env.example` and change name to `.env`. 
+
+3. Create `compose.yaml` and paste the configuration example below.
     ```yaml
     services:
     toybank:
@@ -26,21 +28,20 @@ The easiest way to get the Toy Bank running is using Docker Compose.
         ports:
         - "8000:8000"
 
-        # This overrides the enviroment settings from the .env file in the image
-        environment:
-        - ACCOUNT_HOLDER_NAME=Arya # Change to account holder's name
-        - TELLER_PASSWORD=0000 # This overrides the default password from the .env file in the image
+        # read .env file and set variables as environment variables into the container
+        env_file:
+        - .env
         
         # Map the data folder in the container to one on the host
         volumes:
-        - ./data:/usr/src/app/app/data
+        - ./data:/toybank/app/data
     ```
 
-3. Start the service
+4. Start the service
     ```sh
     docker compose up -d
     ```
-4. Access
+5. Access
 The application will be available in your web browser:
 
     URL: http://localhost:8000
