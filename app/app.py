@@ -9,13 +9,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Configuration ---
-# Define the base directory of the script for robust file path handling
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# Load DB filename from .env (defaults to 'toybank.db' if not set)
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
 ACCOUNT_HOLDER_NAME = os.getenv('ACCOUNT_HOLDER_NAME', 'NAME')
+# Load DB filename from .env (defaults to 'toybank.db' if not set)
 DB_FILENAME = os.getenv('DB_FILENAME', 'toybank.db')
-DATABASE = os.path.join(BASE_DIR, 'data', DB_FILENAME)
+DATABASE = os.path.join(BASEDIR,'data', DB_FILENAME)
 
 # Load teller password and secret key from .env
 TELLER_PASSWORD = os.getenv('TELLER_PASSWORD')
