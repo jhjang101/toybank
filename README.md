@@ -14,7 +14,7 @@ The easiest way to get the Toy Bank running is using Docker Compose.
 3. Create `compose.yaml` and paste the configuration example below.
     ```yaml
     services:
-    toybank:
+      toybank:
         # Use the image you built locally with the updated app.py file
         image: ghcr.io/jhjang101/toybank:latest
 
